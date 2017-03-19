@@ -1,20 +1,18 @@
-package com.caden.thread.deadlock;
+package com.caden.mutilthreading.deadlock;
 
-
-/*
-*   使用synchronized代码块解决死锁问题
-* */
-public class DeadLockSolution1 {
+/**
+ * Dead Lock死锁情景再现，死锁的根本原因就是为了让foo1／foo2同时得到两把锁才可以执行
+ */
+public class DeadLock1 {
 
     private Object lock1 = new Object();
     private Object lock2 = new Object();
 
     private void foo1() throws InterruptedException {
-        synchronized (lock1) {
+        synchronized(lock1) {
             System.out.println("foo1 in A");
             Thread.sleep(1000);
-            lock1.wait();
-            synchronized (lock2) {
+            synchronized(lock2) {//foo2的B未被释放，所以进不来
                 System.out.println("foo1 in B");
             }
         }
@@ -24,20 +22,19 @@ public class DeadLockSolution1 {
         synchronized (lock2) {
             System.out.println("foo2 in B");
             Thread.sleep(1000);
-            synchronized (lock1) {
+            synchronized(lock1) {//foo1的A未被释放，所以进不来
                 System.out.println("foo2 in A");
-                lock1.notify();//如果直接写notify()是错的，需要标注有A的存在
             }
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
-        DeadLockSolution1 solution = new DeadLockSolution1();
+        DeadLock1 obj = new DeadLock1();
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    solution.foo1();
+                    obj.foo1();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -47,7 +44,7 @@ public class DeadLockSolution1 {
             @Override
             public void run() {
                 try {
-                    solution.foo2();
+                    obj.foo2();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

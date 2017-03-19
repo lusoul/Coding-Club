@@ -1,4 +1,4 @@
-package com.caden.thread.deadlock;
+package com.caden.mutilthreading.deadlock;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
