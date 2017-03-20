@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Trie {
-
     class TrieNode {
         Map<Character, TrieNode> map;
         boolean endOfWord;
