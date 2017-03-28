@@ -4,6 +4,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Trie {
+    double d;
+    int x;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Trie trie = (Trie) o;
+
+        if (Double.compare(trie.d, d) != 0) return false;
+        return x == trie.x;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(d);
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + x;
+        return result;
+    }
 
     class TrieNode {
         Map<Character, TrieNode> map;
@@ -72,3 +95,5 @@ public class Trie {
         System.out.println(trie.startWith("wal"));
     }
 }
+
+
