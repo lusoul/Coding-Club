@@ -2,7 +2,7 @@ package com.caden.leetcode.facebook;
 
 public class TasksToWorker {
     public static void main(String[] args) {
-        int[] tasks = {2,2,3,7,1};
+        int[] tasks = {1,2,1,2,3,3,5};
         int workers = 2;
         Solution5 s = new Solution5();
         System.out.println(s.shortest(tasks, workers));

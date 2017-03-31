@@ -6,6 +6,9 @@ import java.util.Map;
 
 public class Test5 {
     public static void main(String[] args) {
+
+
+
 //        System.out.println(sqrt(8));
         int[] A = {1,1,2,3,2};//,2,3,2};
 
