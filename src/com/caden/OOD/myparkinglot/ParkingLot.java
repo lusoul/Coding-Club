@@ -1,6 +1,7 @@
 package com.caden.OOD.myparkinglot;
 
-//停车场有行为：查询是否有合适的空位可以停当前的车；将当前的车与指定ParkingSpot匹配起来，实际是根据Level来匹配，Level下面才是spots，所以level也要有这方法；车子离开以后对ParkingSpot进行还原
+//停车场有行为：查询是否有合适的空位可以停当前的车；将当前的车与指定ParkingSpot匹配起来，实际是根据Level来匹配，Level下面才是spots，
+// 所以level也要有这方法；车子离开以后对ParkingSpot进行还原
 public class ParkingLot {
     private String address;
     private final static int TOTAL_SPOT = 100;

@@ -6,41 +6,38 @@ import java.util.Map;
 
 public class Test5 {
     public static void main(String[] args) {
+        String s = "134.9";
+        String[] ss = s.split("\\.");
 
+        System.out.println(ss.length);
+        for (String sss : ss) {
+            System.out.println(sss);
+        }
 
+        /*
+        {0.2,0.5,1.1,1.4,2.5,2.8,3.4,3.9,4.7} -> 4
+        {3.1,3.2,3.3,4.1,4.2} -> 2
+        {2.1,2.2,2.5,3.2,4.3,5.0,5.2} -> 3
+         */
+//        double[] A = {3.1,3.2,3.3,4.1,4.2};
+//        System.out.println(count(A));
+    }
 
-//        System.out.println(sqrt(8));
-        int[] A = {1,1,2,3,2};//,2,3,2};
-
-        int time = 0;
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(1, 0);
-        map.put(2, 0);
-        map.put(3, 0);
-
-        boolean setToZero = false;
+    public static int count(double[] A) {
+        double rightWall = A[0] + 1;
+        double rightCandidate = A[0] + 1;
+        int count = 1;
         for (int i = 0; i < A.length; i++) {
-            if (map.get(A[i]) == 0) {
-                time++;
-                map.put(A[i], 2);
-                setToZero = false;
-            } else {
-                time = time + map.get(A[i]) + 1;
-                setToZero = true;
-            }
-
-            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-                if (entry.getKey() != A[i] && entry.getValue() != 0) {
-                    if (setToZero) {
-                        entry.setValue(0);
-                    } else {
-                        entry.setValue(entry.getValue() - 1);
-                    }
-                }
+//            if (A[i] < rightWall && A[i] + 1 > rightCandidate) {
+//                rightCandidate = A[i] + 1;
+//            }
+            if (A[i] > rightWall) {
+                rightWall = A[i] + 1;
+//                rightCandidate = A[i] + 1;
+                count++;
             }
         }
-        System.out.println(time);
-
+        return count;
     }
 
     public static float sqrt(int target) {

@@ -14,24 +14,25 @@ public class LinkedListToBalancedBinaryTree {
         printOutTree(root);
     }
 
-    ListNode curPoint;
+//    ListNode curr;
     public TreeNode generateOrder(ListNode head) {
-        curPoint = head;
-        TreeNode ret = dfs(0, 4);
+        ListNode curr = head;
+        TreeNode ret = dfs(0, 4, curr);
         return ret;
     }
-    private TreeNode dfs(int start, int end) {
+    private TreeNode dfs(int start, int end, ListNode curr) {
         if (start > end) return null;
 
-        TreeNode cur = new TreeNode(curPoint.val);
-        curPoint = curPoint.next;//这句要求curPoint必须是全局变量，如果只是方法参数，该方法内修改了引用指向，方法外并没有变，除非你改变的是引用内的值
-        int mid = (start + end) / 2;
-        TreeNode left = dfs(start, mid - 1);
-        TreeNode right = dfs(mid + 1, end);
+        TreeNode node = new TreeNode(curr.val);
+        curr = curr.next;//这句要求curPoint必须是全局变量，如果只是方法参数，该方法内修改了引用指向，方法外并没有变，除非你改变的是引用内的值
 
-        cur.left = left;
-        cur.right = right;
-        return cur;
+        int mid = (start + end) / 2;
+        TreeNode left = dfs(start, mid - 1, curr);
+        TreeNode right = dfs(mid + 1, end, curr);
+
+        node.left = left;
+        node.right = right;
+        return node;
     }
 
     public static void printOutTree(TreeNode root) {
