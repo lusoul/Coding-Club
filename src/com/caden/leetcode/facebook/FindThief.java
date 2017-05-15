@@ -6,13 +6,13 @@ package com.caden.leetcode.facebook;
  *  如:如果只有三个房间那么如果打开房间的sequence是{1，1}那么 定会找到 偷。因为如 果 偷在中间那么第 天就会被找到，.
  *  如果 偷在两边那么第 天 定回来到中间也会被找到。房间数为n，sequence 度为k
  *
- *  rooms = 4; strategy[]={0,2,1,1,2,2,1} -> true
+ *  rooms = 4; strategy[]={0,2,1,1,2} -> true
  *  rooms = 3; strategy[]={1,1} - true
  */
 public class FindThief {
     public static void main(String[] args) {
-        int rooms = 4;
-        int[] strategy = {0,1,3,0,2,2,0,2,1,1,2,2,1};
+        int rooms = 5;
+        int[] strategy = {0,2,1,1,2,3,2,3,1,1,0,3,3,3,2};
         SolutionFindThief s = new SolutionFindThief();
         System.out.println(s.findThief(rooms, strategy));
         System.out.println(s.findThiefDP(rooms, strategy));

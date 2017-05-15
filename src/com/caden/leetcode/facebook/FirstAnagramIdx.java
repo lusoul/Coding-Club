@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class FirstAnagramIdx {
     public static void main(String[] args) {
-        String source = "reacaherahca";
+        String source = "katateac";
         String target = "a";
         FirstAnagramIdx fai = new FirstAnagramIdx();
         System.out.println(fai.findFirstIdx(source, target));
@@ -48,6 +48,8 @@ public class FirstAnagramIdx {
         }
         return -1;
     }
+
+
 }
 
 

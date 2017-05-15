@@ -1,14 +1,72 @@
 package com.caden.leetcode.facebook;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
+
 public class TasksToWorker {
     public static void main(String[] args) {
-        int[] tasks = {1,2,1,2,3,3,5};
-        int workers = 2;
+        int[] tasks = {7,1,2,5,8,9,1,4};
+        int workers = 4;
         Solution5 s = new Solution5();
         System.out.println(s.shortest(tasks, workers));
+        //----------------------------------
+        SolutionTasksToWork ss = new SolutionTasksToWork();
+        List<List<Integer>> ret = ss.getArrange(tasks, workers);
+        for (List<Integer> list : ret) {
+            for (Integer i : list) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
     }
 }
 
+//以下是正确的解法使用Heap
+class SolutionTasksToWork {
+    public List<List<Integer>> getArrange(int[] tasks, int workers) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer i1, Integer i2) {
+                return i2 - i1;
+            }
+        });
+        PriorityQueue<WrapList> wHeap = new PriorityQueue<>(new Comparator<WrapList>() {
+            @Override
+            public int compare(WrapList w1, WrapList w2) {
+                return w1.sum - w2.sum;
+            }
+        });
+
+        for (int i : tasks) maxHeap.offer(i);//O(n)
+        while (!maxHeap.isEmpty()) {//O(logn * logn)
+            int cur = maxHeap.poll();
+            if (wHeap.size() < workers) {
+                WrapList wList = new WrapList();
+                wList.sum += cur;
+                wList.list.add(cur);
+                wHeap.offer(wList);
+            } else {
+                WrapList wList = wHeap.poll();
+                wList.sum += cur;
+                wList.list.add(cur);
+                wHeap.offer(wList);
+            }
+        }
+        List<List<Integer>> ret = new ArrayList<>();
+        while (!wHeap.isEmpty()) {// < O(nlogn), because log1+log2+log3+...logn=log(1*2*..*n)=log(n!)<log(n^n)=nlogn
+            ret.add(wHeap.poll().list);
+        }
+        return ret;
+    }
+    class WrapList {
+        int sum;
+        List<Integer> list = new ArrayList<>();
+    }
+}
+
+//以下是错误的解法DP
 class Solution5 {
     public int shortest(int[] tasks, int workers) {
         if (tasks == null || tasks.length == 0) return 0;
