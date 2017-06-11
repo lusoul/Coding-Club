@@ -1,0 +1,2 @@
+首先和面试官确认，一个building有一个电梯还是多个电梯。这里我就用一个电梯。然后确认scenario是比如
+这题的电梯移动算法比较复杂，我就以最简单的scenario来做了，就是找离current floor最近的target floor进行移动，部分方向什么的了，否则比较复杂

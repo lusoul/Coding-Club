@@ -25,14 +25,14 @@ import java.util.List;
  2 5 100
  3 4 100
 
- 输出样例 #00:
+ 输出样例 max为:
  200
 
  解释:
  第一次更新后，列表变为 100 100 0 0 0，
  第二次更新后，列表变为 100 200 100 100 100。
  第三次更新后，列表变为 100 200 200 200 100。
- 因此要求的答案是200。
+ 因此要求的答案max是200。
  */
 public class AlgorithmCrush {
     public static void main(String[] args) {

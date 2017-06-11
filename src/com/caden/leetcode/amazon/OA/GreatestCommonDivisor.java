@@ -20,12 +20,20 @@ class SolutionGreatestCommonDivisor {
         return num;
     }
 
+//    public int gcd(int a, int b) {
+//        while (b != 0) {
+//            int temp = b;
+//            b = a % b;
+//            a = temp;
+//        }
+//        return a;
+//    }
     public int gcd(int a, int b) {
-        while (b != 0) {
-            int temp = b;
-            b = a % b;
-            a = temp;
+        while (a != 0) {
+            int temp = a;
+            a = b % a;
+            b = temp;
         }
-        return a;
+        return b;
     }
 }

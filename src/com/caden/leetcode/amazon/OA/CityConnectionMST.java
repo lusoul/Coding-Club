@@ -3,6 +3,8 @@ package com.caden.leetcode.amazon.OA;
 import java.util.*;
 
 /**
+ * MST = Minimum Spanning Tree最小生成树
+ *
  * 给出一个ArrayList<Connection>，里面是Connection类(edge两端的城市名和它们之间的一个cost)，
  * 要求找出一些边，把所有城市连接起来并且总花费最小。不能有环，最后所以城市要连成一个连通块。
  * 不能的话输出空表或者null(这个不太记得，题目有说，有占一个case)，最后还要按城市名字(先node1，node1相同按node2)排序输出。

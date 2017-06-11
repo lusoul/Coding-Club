@@ -1,47 +1,72 @@
 package com.caden.test;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.*;
-
 
 public class Test1 {
     public static void main(String[] args) throws InterruptedException {
-        double lNum = 92233720368547758099223372036854775809.0;
-
-        System.out.println(lNum);
-        int[] A = {-34,-52,72,75,-12};
         SolutionIS s = new SolutionIS();
-        List<List<Integer>> ret = s.findSubsequences(A);
-        for (List<Integer> l : ret) {
-            for (Integer i : l) {
-                System.out.print(i + " ");
-            }
-            System.out.println();
-        }
+        char[][] board = {
+                {'1','1','0','0','0'},
+                {'1','1','0','0','0'},
+                {'0','0','1','0','0'},
+                {'0','0','0','1','1'}};
+        System.out.println(s.numIslands(board));
     }
 }
 
 class SolutionIS {
-    public List<List<Integer>> findSubsequences(int[] nums) {
-        List<List<Integer>> ret = new ArrayList<>();
-        Set<List<Integer>> set = new HashSet<>();
-        if (nums == null || nums.length < 2) return ret;
-        dfs(ret, new ArrayList<Integer>(), 0, nums, set);
-        return ret;
-    }
-    private void dfs(List<List<Integer>> ret, List<Integer> path, int startPos, int[] A, Set<List<Integer>> set) {
-        if (path.size() > 1 && !set.contains(path)) {
-            ret.add(new ArrayList<Integer>(path));
-            set.add(new ArrayList<Integer>(path));
+    public int numIslands(char[][] board) {
+        if (board == null || board.length == 0 || board[0].length == 0) return 0;
+        int row = board.length, col = board[0].length;
+        UF uf = new UF(row * col);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (board[i][j] == '0') continue;
+                if (i + 1 < row && board[i + 1][j] == '1')
+                    uf.union(i * col + j, (i + 1) * col + j);
+                if (j + 1 < col && board[i][j + 1] == '1')
+                    uf.union(i * col + j, i * col + j + 1);
+            }
         }
-        for (int i = startPos; i < A.length; i++) {
-            if (path.size() != 0 && A[i] < path.get(path.size() - 1)) continue;
-            path.add(A[i]);
-            dfs(ret, path, i + 1, A, set);
-            path.remove(path.size() - 1);
+        int count = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (board[i][j] == '1' && uf.find(i * col + j) == i * col + j)
+                    count++;
+            }
         }
+        return count;
     }
 }
 
-
+class UF {
+    int[] id;
+    int[] size;
+    public UF(int n) {
+        id = new int[n];
+        size = new int[n];
+        for (int i = 0; i < n; i++) {
+            id[i] = i;
+            size[i] = 1;
+        }
+    }
+    public int find(int p) {
+        while (p != id[p]) {
+            id[p] = id[id[p]];
+            p = id[p];
+        }
+        return p;
+    }
+    public void union(int p, int q) {
+        int pRoot = find(p);
+        int qRoot = find(q);
+        if (pRoot == qRoot) return;
+        if (size[pRoot] < size[qRoot]) {
+            id[pRoot] = qRoot;
+            size[qRoot] += size[pRoot];
+        } else {
+            id[qRoot] = pRoot;
+            size[pRoot] += size[qRoot];
+        }
+    }
+}

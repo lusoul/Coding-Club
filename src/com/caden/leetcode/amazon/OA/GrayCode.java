@@ -38,3 +38,4 @@ class SolutionGrayCode {
         return ret;
     }
 }
+

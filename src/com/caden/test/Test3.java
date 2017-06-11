@@ -1,122 +1,80 @@
 package com.caden.test;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Test3 {
+    static class Node {
+        int val;
+        List<Node> neighbors;
+        public Node(int val) {
+            this.val = val;
+            neighbors = new ArrayList<>();
+        }
+        public int hashCode() {
+            return val;
+        }
+        public boolean equals(Object obj) {
+            if (obj instanceof Node) {
+                Node cur = (Node)obj;
+                return cur.val == this.val;
+            }
+            return false;
+        }
+    }
     public static void main(String[] args) {
-        Iterator iter = new MyIterator();
-//        while (iter.hasNext()) {
-//            Location loc = (Location)iter.next();
-//            System.out.println(loc.getLongitude() + " " + loc.getLatitude());
-//        }
-        System.out.println("-------------");
-        IObjectTest myTest = new IObjectTestImpl();
-        FilteringIterator fIter = new FilteringIterator(iter, myTest);
-        while (fIter.hasNext()) {
-            Location loc = fIter.next();
-            System.out.println(loc.getLongitude() + " " + loc.getLatitude());
+        Set<Integer> set = new HashSet<>();
+
+        Integer[] arr = set.toArray(new Integer[set.size()]);
+//        Map<Integer, List<Integer>> dictionary = new HashMap<>();
+//        List<Integer> list = new ArrayList<>();
+//        list.add(2);list.add(3);list.add(5);
+//        dictionary.put(1, list);
+//        List<Integer> list2 = new ArrayList<>();
+//        list2.add(3);list2.add(1);
+//        dictionary.put(2, list2);
+//        List<Integer> list3 = new ArrayList<>();
+//        list3.add(2);list3.add(6);
+//        dictionary.put(5, list3);
+        List<Node> lists = contstructGraph();
+        List<String> ret = new ArrayList<>();
+        for (Node node : lists) {
         }
+
+        for (String str : ret) System.out.println(str);
+//        System.out.println(ret.size());
+
     }
-}
-
-interface IObjectTest {
-    boolean test(Location obj);
-}
-class IObjectTestImpl implements IObjectTest {
-    @Override
-    public boolean test(Location obj) {
-        if (null == obj) return false;
-        if (obj instanceof Location) {
-            Location location = (Location)obj;
-            //condition: get location longitude range is [0, 180], latitude range is [-90, 0]
-            if (location.getLongitude() >= 0.0 && location.getLongitude() <= 180
-                    && location.getLatitude() <= 0 && location.getLatitude() >= -90) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
-
-class FilteringIterator implements Iterator {
-    private IObjectTest filter;
-    private Iterator iterator;
-
-    private Location next;
-
-    public FilteringIterator(Iterator myIterator, IObjectTest myTest) {
-        filter = myTest;
-        iterator = myIterator;
-        findNext();//初始化时就定位到一个合法位置
-    }
-
-    private void findNext() {
-        while (iterator.hasNext()) {
-            this.next = (Location) iterator.next();
-            if (null == filter || filter.test(this.next)) {
-                return;
-            }
-        }
-        this.next = null;//这句很重要
-    }
-
-    @Override
-    public boolean hasNext() {
-        return this.next != null;
-    }
-
-    @Override
-    public Location next() {
-        Location ret = this.next;
-        this.findNext();
+    public static List<Node> contstructGraph() {
+        List<Node> ret = new ArrayList<>();
+        Node node1 = new Node(1);Node node2 = new Node(2);//Node node3 = new Node(3);
+        Node node5 = new Node(5);//Node node6 = new Node(6);
+        node1.neighbors.add(node2);//node1.neighbors.add(node3);
+        node1.neighbors.add(node5);
+        //node2.neighbors.add(node3);
+        node2.neighbors.add(node1);
+        node5.neighbors.add(node2);//node5.neighbors.add(node6);
+        ret.add(node1);ret.add(node2);//ret.add(node3);
+        ret.add(node5);//ret.add(node6);
         return ret;
     }
-}
 
+    public static void search(List<String> ret, String path, Node node, Set<Node> set) {
+        if (set.contains(node)) {
+            ret.add(path);
+            return;
+        }
 
-class Location {
-    private double longitude;
-    private double latitude;
-    public Location() {}
-    public Location(double longitude, double latitude) {
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }
-    public double getLongitude() {
-        return this.longitude;
-    }
-    public double getLatitude() {
-        return this.latitude;
-    }
-}
+        String temp = path + " " + node.val;
+        List<Node> neighbors = node.neighbors;
+        set.add(node);
+        for (Node nei : neighbors) {
+            search(ret, temp, nei, set);
+        }
+        set.remove(node);
 
-class MyIterator implements Iterator {
-
-    private List<Location> list = new ArrayList<>();
-    private int idx = 0;
-
-    public MyIterator() {
-        list.add(new Location(100.0, 89.1));
-        list.add(new Location(-100.0, 89.1));
-        list.add(new Location(123.0, -89.1));
-        list.add(new Location(-100.0, -89.1));
-
-//        list.add(new Location(127.999, -10.931));
-//        list.add(new Location(-100.0, -89.1));
-//        list.add(new Location(-100.0, -89.1));
-//        list.add(new Location(-100.0, -89.1));
-    }
-
-    @Override
-    public boolean hasNext() {
-        return idx != list.size();
-    }
-
-    @Override
-    public Location next() {
-        Location ret = list.get(idx++);
-        return ret;
     }
 }
+
+
+
+

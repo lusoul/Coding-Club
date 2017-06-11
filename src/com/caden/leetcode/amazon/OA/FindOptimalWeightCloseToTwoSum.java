@@ -2,9 +2,6 @@ package com.caden.leetcode.amazon.OA;
 
 import java.util.Arrays;
 
-/**
- * Created by lusoul on 2017/5/8.
- */
 public class FindOptimalWeightCloseToTwoSum {
     public static void main(String[] args) {
         double capacity = 35;
