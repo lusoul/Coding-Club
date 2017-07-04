@@ -1,7 +1,7 @@
 package com.caden.OOD.Elevator;
 
 /**
- * 也是单例，因为就只有一个电梯
+ * 也是单例，因为就只有一个电梯.
  */
 public class Elevator {
     int curFloor;
