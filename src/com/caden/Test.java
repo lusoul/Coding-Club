@@ -3,3 +3,5 @@ public class Test {
 		System.out.println("Hello Word");
 	}
 }
+
+I'm in the second branch, this is the message I add in second branch
