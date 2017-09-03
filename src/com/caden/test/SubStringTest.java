@@ -7,6 +7,8 @@ public class SubStringTest {
     public static void main(String[] args) {
         String source = "abcdabcd";
         System.out.println(source.contains("cd"));
+
+        System.out.println("hello world");
 //
 //        String target = "abcd";
 ////        System.out.println(source.substring(source.length()).equals(""));

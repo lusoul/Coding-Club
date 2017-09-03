@@ -5,66 +5,41 @@ package com.caden.test;
  */
 public class EEEEE {
     public static void main(String[] args) {
-        int[] A = {2,1};
-        int k = 2;
-        SolutionKTH s = new SolutionKTH();
-        System.out.println(s.findKthLargest(A, k));
+        String s = "aaab";
+        String p = "b**";
+        SolutionKTH solution = new SolutionKTH();
+        System.out.println(solution.isMatch(s, p));
     }
 }
+
 
 class SolutionKTH {
-    public int findKthLargest(int[] nums, int k) {
-        if (nums == null || nums.length == 0 || k > nums.length) return -1;
-        int start = 0, end = nums.length - 1;
-        while (start <= end) {
-            int mid = partition(nums, start, end);
-            if (mid - start + 1 == k) {
-                return nums[mid];
-            } else if (mid - start + 1 < k) {
-                k = k - (mid - start + 1);
-                start = mid + 1;
-            } else {
-                end = mid - 1;
+    public boolean isMatch(String s, String p) {
+        if ((s == null || s.length() == 0) && (p == null || p.length() == 0)) return true;
+        if (p == null || p.length() == 0) return false;
+
+//        boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
+        boolean[][] dp = new boolean[3][p.length() + 1];
+        dp[0][0] = true;
+
+
+        for (int j = 1; j <= p.length() ;j ++) {
+            dp[0][j] = p.charAt(j - 1) == '*' && dp[0][j - 1];
+        }
+
+
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 1; j <= p.length(); j++) {
+                char c1 = s.charAt(i - 1);
+                char c2 = p.charAt(j - 1);
+                if (c1 == c2 || c2 == '?') dp[i % 3][j] = dp[(i - 1) % 3][j - 1];
+                else if (c2 == '*') {
+                    dp[i % 3][j] = dp[i % 3][j - 1] || dp[(i - 1) % 3][j];
+                }
             }
         }
-        return -1;
-    }
+        return dp[s.length() % 3][p.length()];
 
-    private int partition(int[] A, int start, int end) {
-        int pivot = A[start];
-        while (start < end) {
-            while (start < end && A[end] <= pivot) {
-                end--;
-            }
-            A[start] = A[end];
-            while (start < end && A[start] >= pivot) {
-                start++;
-            }
-            A[end] = A[start];
-        }
-        A[start] = pivot;
-        return start;
-    }
-
-    private boolean search(String s, String p, int i, int j) {
-        if (i == s.length() && j == p.length()) return true;
-        if (j == p.length()) return false;
-
-        if (j < p.length() - 1 && p.charAt(j + 1) == '*') {
-            if (i == s.length() || p.charAt(j) != '.' && s.charAt(i) != p.charAt(j)) {
-                return search(s, p, i, j + 2);
-            } else {
-                return search(s, p, i, j + 2) || search(s, p, i + 1, j);
-            }
-        } else {
-            if (i == s.length() || p.charAt(j) != '.' && s.charAt(i) != p.charAt(j)){
-                return false;
-            } else {
-                return search(s, p, i + 1, j + 1);
-            }
-        }
     }
 }
-
-
 

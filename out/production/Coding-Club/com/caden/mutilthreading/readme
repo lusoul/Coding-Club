@@ -1,0 +1,3 @@
+使用ReentrantLock的两点原因：
+1. 利用他的tryLock()功能解除死锁
+2. 利用它可以new出多个condition的特性来线程通信
