@@ -5,3 +5,5 @@ public class Test {
 		int b = 3;
 	}
 }
+
+I'm in the second branch, this is the message I add in second branch
